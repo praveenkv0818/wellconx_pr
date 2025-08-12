@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EHR Module</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-4 bg-white shadow">
+        <a href="{% url 'dashboard' %}" class="text-sm text-blue-600">&larr; Back to Dashboard</a>
+        <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            EHR Module 
+        </h1>
+        <div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="bg-white shadow mt-4 mx-6 rounded-lg">
+        <div class="flex border-b text-sm font-medium text-gray-600">
+            <button class="py-3 px-6 border-b-2 border-blue-500 text-blue-600"><a class="nav-link" href="{% url 'ehr_home' %}" >Patient Profiles</a></button>
+            <button class="py-3 px-6"><a class="nav-link" href="{% url 'visit_history' %}">Visit History</a></button>
+            <button class="py-3 px-6"><a class="nav-link" href="{% url 'clinical_docs' %}">Clinical Docs</a></button>
+            <button class="py-3 px-6"><a class="nav-link" href="{% url 'prescriptions' %}">Prescriptions</a></button>
+            <button class="py-3 px-6"><a class="nav-link" href="{% url 'investigations' %}">Investigations</a></button>
+            <button class="py-3 px-6"><a class="nav-link" href="{% url 'access_control' %}" ><i class="bi bi-shield-lock"></i> Access Control</a></button>
+            <button class="py-3 px-6"><a class="nav-link" href="{% url 'add_discharge_summary' %}">Discharge</a></button>
+
+
+        </div>
+    </div>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

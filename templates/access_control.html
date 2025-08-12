@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Access Control{% endblock %}
+
+{% block content %}
+<div class="p-6">
+    <div class="bg-white p-6 rounded-lg shadow border">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                <i class="bi bi-shield-lock-fill text-blue-600 mr-2"></i> Access Control & Role Segmentation
+            </h2>
+            <p class="text-gray-500 text-sm mt-1">
+                Department and role-based EHR access management
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Doctor card -->
+            <div class="border rounded-lg p-4 shadow-sm hover:shadow-md transition">
+                <h3 class="text-lg font-semibold text-gray-900">Doctor</h3>
+                <p class="text-sm text-gray-500 mb-3">{{ doctor_count }} users</p>
+                <div class="space-y-2">
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">Full Access</div>
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">Edit Records</div>
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">Prescribe</div>
+                </div>
+            </div>
+
+            <!-- Nurse card -->
+            <div class="border rounded-lg p-4 shadow-sm hover:shadow-md transition">
+                <h3 class="text-lg font-semibold text-gray-900">Nurse</h3>
+                <p class="text-sm text-gray-500 mb-3">{{ nurse_count }} users</p>
+                <div class="space-y-2">
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">View Records</div>
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">Update Vitals</div>
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">Notes</div>
+                </div>
+            </div>
+
+            <!-- Admin card -->
+            <div class="border rounded-lg p-4 shadow-sm hover:shadow-md transition">
+                <h3 class="text-lg font-semibold text-gray-900">Admin</h3>
+                <p class="text-sm text-gray-500 mb-3">{{ admin_count }} users</p>
+                <div class="space-y-2">
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">System Admin</div>
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">User Management</div>
+                    <div class="bg-gray-100 py-2 px-3 rounded text-sm font-medium">Reports</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

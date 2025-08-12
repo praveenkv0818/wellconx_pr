@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto mt-8">
+    <div class="bg-white shadow-lg rounded-xl p-8">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 border-b pb-3">
+                📝 Add Discharge Summary
+            </h2>
+            <a href="{% url 'discharge_summary_list' %}" 
+               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+               📄 View All
+            </a>
+        </div>
+
+        <!-- Form -->
+        <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% csrf_token %}
+
+            <!-- Patient Dropdown -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Patient</label>
+                <select id="patient_id" name="patient" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300" required>
+                    <option value="">Select Patient</option>
+                    {% for p in patients %}
+                        <option value="{{ p.patient_id }}">{{ p.patient_id }} - {{ p.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Read-only auto-filled fields -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Patient Name</label>
+                <input type="text" id="patient_name" readonly class="bg-gray-100 mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Age</label>
+                <input type="number" id="age" readonly class="bg-gray-100 mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Gender</label>
+                <input type="text" id="gender" readonly class="bg-gray-100 mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Contact Number</label>
+                <input type="text" id="contact_number" readonly class="bg-gray-100 mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <!-- Manual Entry Fields -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">UHID</label>
+                <input type="text" name="uhid" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300" required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">IP ID</label>
+                <input type="text" name="ip_id" class="mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Ward</label>
+                <input type="text" name="ward" class="mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Bed No</label>
+                <input type="text" name="bed_no" class="mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Consultant Name</label>
+                <input type="text" name="consultant_name" class="mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Admission Date</label>
+                <input type="date" name="admission_date" class="mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Discharge Date</label>
+                <input type="date" name="discharge_date" class="mt-1 w-full border rounded-lg px-3 py-2">
+            </div>
+
+            <!-- Textareas -->
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Final Diagnosis</label>
+                <textarea name="final_diagnosis" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Procedures Done</label>
+                <textarea name="procedures_done" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Clinical Examination</label>
+                <textarea name="clinical_examination" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Consultations</label>
+                <textarea name="consultations" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Chief Complaints</label>
+                <textarea name="chief_complaints" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Past History</label>
+                <textarea name="past_history" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Hospital Course</label>
+                <textarea name="hospital_course" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Condition on Discharge</label>
+                <textarea name="condition_on_discharge" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Discharge Advice</label>
+                <textarea name="discharge_advice" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Diet Advice</label>
+                <textarea name="diet_advice" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Follow Up</label>
+                <textarea name="follow_up" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-gray-700">Emergency Instructions</label>
+                <textarea name="emergency_instructions" rows="3" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300"></textarea>
+            </div>
+
+            <!-- Discharge Type -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700">Discharge Type</label>
+                <select name="discharge_type" class="mt-1 w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300">
+                    <option value="Planned">Planned</option>
+                    <option value="Against Medical Advice">Against Medical Advice</option>
+                    <option value="Death">Death</option>
+                </select>
+            </div>
+
+            <!-- Submit -->
+            <div class="md:col-span-2 text-right">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 shadow">
+                    Save Discharge Summary
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- JS to Auto-fill -->
+<script>
+document.getElementById('patient_id').addEventListener('change', function() {
+    let patientId = this.value;
+    if (patientId) {
+        fetch(`/api/patient-details/${patientId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    document.getElementById('patient_name').value = data.name || '';
+                    document.getElementById('age').value = data.age || '';
+                    document.getElementById('gender').value = data.gender || '';
+                    document.getElementById('contact_number').value = data.contact_number || '';
+                } else {
+                    clearPatientFields();
+                }
+            })
+            .catch(() => clearPatientFields());
+    } else {
+        clearPatientFields();
+    }
+});
+
+function clearPatientFields() {
+    document.getElementById('patient_name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('gender').value = '';
+    document.getElementById('contact_number').value = '';
+}
+</script>
+{% endblock %}

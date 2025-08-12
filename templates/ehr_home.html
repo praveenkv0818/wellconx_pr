@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Patient Search + Info Panel -->
+        <div class="flex p-6 gap-6">
+            <!-- Sidebar -->
+            <div class="w-1/3">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold">Patient Search</h2>
+                    {% if role == 'admin' %}
+    <a href="{% url 'add_patient' %}" class="btn btn-primary">New Patient</a>
+
+{% endif %}
+                </div>
+                <input type="text" placeholder="Search patients..." class="w-full px-4 py-2 border border-gray-300 rounded mb-4">
+
+                 <!-- List patients -->
+
+                <div class="space-y-4">
+    {% for patient in patients %}
+    <div class="p-4 bg-white rounded border patient-card" data-id="{{ patient.patient_id }}" style="cursor: pointer;">
+        <div class="flex justify-between">
+            <div>
+                <p class="font-semibold">{{ patient.name }}</p>
+                <p class="text-sm text-gray-600">ID: {{ patient.patient_id }}</p>
+                <p class="text-sm text-gray-600">Age: {{ patient.age }}</p>
+            </div>
+            <span class="
+                text-xs font-medium px-2 py-1 rounded h-fit
+                {% if patient.status == 'Active' %} bg-green-100 text-green-700
+                {% elif patient.status == 'Follow-up' %} bg-yellow-100 text-yellow-700
+                {% else %} bg-red-100 text-red-700
+                {% endif %}
+            ">
+                {{ patient.status }}
+            </span>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-gray-500">No patients available.</p>
+    {% endfor %}
+</div>
+
+            </div>
+
+          
+            <!-- Right Panel -->
+<div id="patient-detail-panel" class="flex-1 bg-white rounded border p-6 text-gray-700">
+    <div class="text-center text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c3.866 0 7.373 1.568 9.879 4.096M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <p class="font-semibold text-lg">Select a Patient</p>
+        <p class="text-sm text-gray-500">Choose a patient from the list to view their profile</p>
+    </div>
+</div>
+
+        </div>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Attach event to patient cards
+    document.querySelectorAll('.patient-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const patientId = card.getAttribute('data-id');
+            fetch(`/api/patient/${patientId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const panel = document.getElementById('patient-detail-panel');
+                    panel.innerHTML = `
+                        <h2 class="text-xl font-semibold mb-4">Patient Profile: ${data.name}</h2>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div><strong>Full Name:</strong> ${data.name}</div>
+                            <div><strong>Primary Condition:</strong> ${data.primary_condition || 'N/A'}</div>
+                            <div><strong>Patient ID:</strong> ${data.patient_id}</div>
+                            <div><strong>Last Visit:</strong> ${data.last_visit || 'N/A'}</div>
+                            <div><strong>Age:</strong> ${data.age}</div>
+                            <div><strong>Status:</strong> ${data.status}</div>
+                        </div>
+                        <div class="mt-6 flex gap-2">
+                            <button class="px-4 py-2 bg-blue-600 text-white rounded"><a href="/patient/${data.patient_id}/edit/">Edit Profile</a></button>
+                            <button class="px-4 py-2 border border-gray-400 rounded">View History</button>
+                            <button class="px-4 py-2 border border-gray-400 rounded">Generate Report</button>
+                        </div>
+                    `;
+                });
+        });
+    });
+
+   
+            
+        });
+</script>
+
+{% endblock %}
